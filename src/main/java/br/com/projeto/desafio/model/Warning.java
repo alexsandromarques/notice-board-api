@@ -9,6 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "tb_warning")
 public class Warning {
@@ -28,60 +35,5 @@ public class Warning {
 
 	@Column(name = "preview")
 	private Date preview;
-
-	public Warning() {
-	}
-
-	public Warning(Long id, String title, String description, Date publication) {
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.publication = publication;
-	}
-
-	public Warning(String title, String description) {
-		this.title = title;
-		this.description = description;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Date getPublication() {
-		return publication;
-	}
-
-	public void setPublication(Date publication) {
-		this.publication = publication;
-	}
-
-	public Date getPreview() {
-		return preview;
-	}
-
-	public void setPreview(Date preview) {
-		this.preview = preview;
-	}
 
 }

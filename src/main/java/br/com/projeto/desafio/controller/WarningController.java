@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.projeto.desafio.dto.WarningDTO;
-import br.com.projeto.desafio.exception.NotFoundException;
+import br.com.projeto.desafio.exception.WarningNotFoundException;
 import br.com.projeto.desafio.model.Warning;
 import br.com.projeto.desafio.service.WarningService;
 
@@ -36,43 +36,39 @@ public class WarningController {
 
 	@GetMapping("/list")
 	public List<WarningDTO> findAll() {
-
 		List<Warning> warnings = this.warningService.findAll();
-
 		return warnings.stream().map(e -> WarningDTO.convertToDTO(e)).collect(Collectors.toList());
 	}
 
 	@GetMapping("/warning/{id}")
 	public ResponseEntity<WarningDTO> getWarningById(@PathVariable(value = "id") Long idWarning)
-			throws NotFoundException, ParseException {
+			throws WarningNotFoundException, ParseException {
 		Warning warning = this.warningService.findById(idWarning);
 		return new ResponseEntity<>(WarningDTO.convertToDTO(warning), HttpStatus.OK);
 	}
 
 	@GetMapping("/details/{id}")
 	public ResponseEntity<WarningDTO> details(@PathVariable(value = "id") Long idWarning)
-			throws NotFoundException, ParseException {
+			throws WarningNotFoundException, ParseException {
 		Warning warning = this.warningService.details(idWarning);
 		return new ResponseEntity<>(WarningDTO.convertToDTO(warning), HttpStatus.OK);
 	}
 
 	@PostMapping("/save")
 	public ResponseEntity<WarningDTO> save(@RequestBody WarningDTO warningDTO) throws ParseException {
-
 		Warning warning = this.warningService.save(warningDTO.convertToObject());
 		return new ResponseEntity<>(WarningDTO.convertToDTO(warning), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")
 	public ResponseEntity<WarningDTO> update(@Valid @RequestBody WarningDTO warningDTO)
-			throws NotFoundException, ParseException {
-
+			throws WarningNotFoundException, ParseException {
 		Warning warning = this.warningService.update(warningDTO.convertToObject());
 		return new ResponseEntity<>(WarningDTO.convertToDTO(warning), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public Map<String, Boolean> delete(@PathVariable(value = "id") Long idWarning) throws NotFoundException {
+	public Map<String, Boolean> delete(@PathVariable(value = "id") Long idWarning) throws WarningNotFoundException {
 		this.warningService.delete(idWarning);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
